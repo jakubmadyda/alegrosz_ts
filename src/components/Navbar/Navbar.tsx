@@ -13,6 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
+import { faker } from '@faker-js/faker';
+
+const avatar = faker.image.avatar();
 
 const pages = [
     {
@@ -213,8 +216,8 @@ function Navbar() {
                                 sx={{ p: 0 }}
                             >
                                 <Avatar
-                                    alt="Remy Sharp"
-                                    src="/static/images/avatar/2.jpg"
+                                    alt={faker.person.fullName()}
+                                    src={avatar}
                                 />
                             </IconButton>
                         </Tooltip>
