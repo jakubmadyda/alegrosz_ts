@@ -23,6 +23,10 @@ const pages = [
         link: '/',
     },
     {
+        name: 'Add Product',
+        link: '/add-product',
+    },
+    {
         name: 'Contact',
         link: '/contact',
     },
