@@ -1,10 +1,14 @@
 import { Outlet } from 'react-router-dom';
+import { Container } from '@mui/material';
+import Navbar from '../Navbar/Navbar';
 
 function Layout() {
     return (
         <>
-            <h2>Menu</h2>
-            <Outlet />
+            <Navbar />
+            <Container maxWidth="lg">
+                <Outlet />
+            </Container>
         </>
     );
 }
