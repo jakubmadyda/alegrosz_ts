@@ -10,8 +10,51 @@ import {
     TextField,
 } from '@mui/material';
 import DropInput from '../DropInput/DropInput';
+import { useEffect, useState } from 'react';
+import { en } from '@faker-js/faker';
+
+// [{id, name, subcategories: [{id, name}]}]
+
+interface Kind {
+    id: number;
+    name: string;
+}
+
+interface Category extends Kind {
+    subcategories: Kind[];
+}
+
+async function getKind(endpoint: string) {
+    const response = await fetch(`/api/v1/${endpoint}`);
+
+    return response.json();
+}
+
+async function getCategoriesWithSubCategories() {
+    const response = await Promise.all([
+        getKind('categories'),
+        getKind('subcategories'),
+    ]);
+
+    const [categories, subcategories] = response;
+
+    return categories.map((category) => ({
+        ...category,
+        subcategories: category.subcategories.map((subcategoryId) =>
+            subcategories.find(
+                (subcategory) => subcategory.id === subcategoryId
+            )
+        ),
+    }));
+}
 
 function ProductForm() {
+    const [categories, setCategories] = useState<Category[]>([]);
+
+    useEffect(() => {
+        getCategoriesWithSubCategories().then(setCategories);
+    }, []);
+
     const formik = useFormik({
         initialValues: {
             name: '',

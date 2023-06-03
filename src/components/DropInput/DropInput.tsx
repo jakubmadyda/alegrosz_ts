@@ -50,6 +50,7 @@ function DropInput() {
 
     return (
         <div className="container">
+            {/*TODO: generate typing for all css attrs*/}
             <div {...getRootProps({ style })}>
                 <input {...getInputProps()} />
                 <p>Drag 'n' drop some files here, or click to select files</p>

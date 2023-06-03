@@ -1,3 +1,191 @@
 {
-  "products": []
+  "products": [
+    {
+      "name": "Smartphone X",
+      "description": "A high-end smartphone with advanced features.",
+      "price": 999.99,
+      "image": "https://example.com/images/smartphone_x.jpg",
+      "stockCount": 10,
+      "barcode": "1234567890",
+      "id": 1
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Televisions",
+      "subcategories": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Smartphones",
+      "subcategories": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Laptops",
+      "subcategories": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Tablets",
+      "subcategories": [
+        10,
+        11
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Desktop Computers",
+      "subcategories": [
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Games and Consoles",
+      "subcategories": [
+        15,
+        16
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Audio and Music Equipment",
+      "subcategories": [
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Cameras",
+      "subcategories": [
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Electronic Accessories",
+      "subcategories": [
+        23,
+        24,
+        25
+      ]
+    }
+  ],
+  "subcategories": [
+    {
+      "id": 2,
+      "name": "LED TVs"
+    },
+    {
+      "id": 3,
+      "name": "Smart TVs"
+    },
+    {
+      "id": 4,
+      "name": "Android Phones"
+    },
+    {
+      "id": 5,
+      "name": "iOS Phones"
+    },
+    {
+      "id": 6,
+      "name": "Windows Phones"
+    },
+    {
+      "id": 7,
+      "name": "Gaming Laptops"
+    },
+    {
+      "id": 8,
+      "name": "Ultrabooks"
+    },
+    {
+      "id": 9,
+      "name": "Gaming Laptops"
+    },
+    {
+      "id": 10,
+      "name": "Android Tablets"
+    },
+    {
+      "id": 11,
+      "name": "iOS Tablets"
+    },
+    {
+      "id": 12,
+      "name": "Gaming PCs"
+    },
+    {
+      "id": 13,
+      "name": "All-in-One PCs"
+    },
+    {
+      "id": 14,
+      "name": "Mini PCs"
+    },
+    {
+      "id": 15,
+      "name": "Gaming Consoles"
+    },
+    {
+      "id": 16,
+      "name": "Accessories"
+    },
+    {
+      "id": 17,
+      "name": "Headphones"
+    },
+    {
+      "id": 18,
+      "name": "Speakers"
+    },
+    {
+      "id": 19,
+      "name": "Musical Instruments"
+    },
+    {
+      "id": 20,
+      "name": "Digital Cameras"
+    },
+    {
+      "id": 21,
+      "name": "DSLR Cameras"
+    },
+    {
+      "id": 22,
+      "name": "Mirrorless Cameras"
+    },
+    {
+      "id": 23,
+      "name": "Cables and Adapters"
+    },
+    {
+      "id": 24,
+      "name": "Cases and Covers"
+    },
+    {
+      "id": 25,
+      "name": "Chargers and Power Banks"
+    }
+  ]
 }
