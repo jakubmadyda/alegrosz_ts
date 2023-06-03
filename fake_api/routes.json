@@ -1,6 +1,6 @@
 {
   "/api/v1/products": "/products",
   "/api/v1/products/:id": "/products/:id",
-  "api/v1/categories": "/categories",
-  "api/v1/subcategories": "/subcategories"
+  "/api/v1/categories": "/categories",
+  "/api/v1/subcategories": "/subcategories"
 }
