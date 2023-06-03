@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import DropInput from '../DropInput/DropInput';
 import { useEffect, useState } from 'react';
-import { en } from '@faker-js/faker';
 
 // [{id, name, subcategories: [{id, name}]}]
 
@@ -20,20 +19,29 @@ interface Kind {
     name: string;
 }
 
-interface Category extends Kind {
-    subcategories: Kind[];
+interface Subcategory {
+    id: number;
+    name: string;
 }
 
-async function getKind(endpoint: string) {
+interface Category extends Kind {
+    subcategories: Array<Subcategory | undefined>;
+}
+
+interface CategoryApi extends Kind {
+    subcategories: number[];
+}
+
+async function getKind<T>(endpoint: string): Promise<T[]> {
     const response = await fetch(`/api/v1/${endpoint}`);
 
     return response.json();
 }
 
-async function getCategoriesWithSubCategories() {
-    const response = await Promise.all([
-        getKind('categories'),
-        getKind('subcategories'),
+async function getCategoriesWithSubCategories(): Promise<Category[]> {
+    const response: [CategoryApi[], Subcategory[]] = await Promise.all([
+        getKind<CategoryApi>('categories'),
+        getKind<Subcategory>('subcategories'),
     ]);
 
     const [categories, subcategories] = response;
@@ -50,6 +58,7 @@ async function getCategoriesWithSubCategories() {
 
 function ProductForm() {
     const [categories, setCategories] = useState<Category[]>([]);
+    const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
 
     useEffect(() => {
         getCategoriesWithSubCategories().then(setCategories);
@@ -63,13 +72,28 @@ function ProductForm() {
             image: '',
             stockCount: 0,
             barcode: '',
-            category: '',
-            subCategory: '',
+            category: '0',
+            subCategory: '0',
         },
         onSubmit: (values) => {
             alert(JSON.stringify(values, null, 2));
         },
     });
+
+    function updateSubcategories(selectedCategory: string) {
+        const selectedCategoryObj = categories.find(
+            (category) => category.id === parseInt(selectedCategory)
+        );
+
+        if (selectedCategoryObj !== undefined) {
+            const subcategoriesFiltered =
+                selectedCategoryObj.subcategories.filter(
+                    Boolean
+                ) as Subcategory[];
+            setSubcategories(subcategoriesFiltered);
+        }
+    }
+
     return (
         <Box sx={{ my: '20px' }}>
             <form onSubmit={formik.handleSubmit}>
@@ -139,11 +163,21 @@ function ProductForm() {
                                 name="category"
                                 value={formik.values.category}
                                 label="Category"
-                                onChange={formik.handleChange}
+                                onChange={(e) => {
+                                    formik.handleChange(e);
+                                    updateSubcategories(e.target.value);
+                                    formik.values.subCategory = '0';
+                                }}
                             >
-                                <MenuItem value="Computers">Computers</MenuItem>
-                                <MenuItem value="Consoles">Consoles</MenuItem>
-                                <MenuItem value="Monitors">Monitors</MenuItem>
+                                <MenuItem value="0">---</MenuItem>
+                                {categories.map((category) => (
+                                    <MenuItem
+                                        value={category.id}
+                                        key={category.id}
+                                    >
+                                        {category.name}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -160,9 +194,15 @@ function ProductForm() {
                                 label="Sub Category"
                                 onChange={formik.handleChange}
                             >
-                                <MenuItem value={10}>Computers</MenuItem>
-                                <MenuItem value={20}>Consoles</MenuItem>
-                                <MenuItem value={30}>Monitors</MenuItem>
+                                <MenuItem value="0">---</MenuItem>
+                                {subcategories.map((subcategory) => (
+                                    <MenuItem
+                                        value={subcategory.id}
+                                        key={subcategory.id}
+                                    >
+                                        {subcategory.name}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </Grid>
