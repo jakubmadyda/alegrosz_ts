@@ -1,5 +1,12 @@
 import Grid from '@mui/material/Grid';
-import { Alert, Box } from '@mui/material';
+import {
+    Alert,
+    Box,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+} from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Product, ProductWithCategories } from '../types/product';
@@ -45,6 +52,7 @@ async function getProductsWithCategories(
 function Home() {
     const [products, setProducts] = useState<ProductWithCategories[]>([]);
     const [query, setQuery] = useState('');
+    const [sortParam, setSortParam] = useState<string>('');
     const location = useLocation();
     const [msg, setMsg] = useState<boolean | undefined>(
         location.state?.deleted
@@ -59,6 +67,10 @@ function Home() {
             controller.abort();
         };
     }, []);
+
+    function handleSortPrice(e) {
+        setSortParam(e.target.value);
+    }
 
     // TODO: create loader
 
@@ -82,8 +94,30 @@ function Home() {
                 <Grid item xs={12}>
                     <Search value={query} setQuery={setQuery} />
                 </Grid>
+                <Grid item xs={12}>
+                    <FormControl fullWidth sx={{ mb: 4 }}>
+                        <InputLabel id="priceSortingLabel">
+                            Sort by price
+                        </InputLabel>
+                        <Select
+                            labelId="priceSortingLabel"
+                            id="priceSorting"
+                            value={sortParam}
+                            label="Sort by price"
+                            onChange={handleSortPrice}
+                        >
+                            <MenuItem value="">None</MenuItem>
+                            <MenuItem value="asc">Ascending</MenuItem>
+                            <MenuItem value="desc">Descending</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
                 <Grid container spacing={2}>
-                    <ProductList products={products} query={query} />
+                    <ProductList
+                        products={products}
+                        query={query}
+                        sortParam={sortParam}
+                    />
                 </Grid>
             </Grid>
         </Box>
