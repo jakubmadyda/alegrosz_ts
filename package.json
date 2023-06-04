@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "api:fake": "json-server --watch ./fake_api/db.json --routes ./fake_api/routes.json --port 3001"
+    "api:fake": "json-server --watch ./fake_api/db.json --routes ./fake_api/routes.json --port 3001",
+    "api:fake-delay": "json-server --watch ./fake_api/db.json --routes ./fake_api/routes.json --port 3001 --delay 5000"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",

@@ -1,48 +1,26 @@
 {
   "products": [
     {
-      "name": "Telefon",
-      "description": "Opis telefonu",
-      "price": 900,
+      "name": "wqeerdr",
+      "description": "vssf",
+      "price": 314,
       "image": "",
-      "stockCount": 10,
-      "barcode": "123455678901",
-      "category": 2,
-      "subCategory": 4,
-      "id": 2
+      "stockCount": 134124,
+      "barcode": "1231423",
+      "category": 1,
+      "subCategory": 2,
+      "id": 9
     },
     {
-      "name": "iPhone 8 ",
+      "name": "iphone x",
       "description": "opis",
-      "price": 999,
+      "price": 220,
       "image": "",
-      "stockCount": 10,
-      "barcode": "123143253452",
+      "stockCount": 120,
+      "barcode": "12345676",
       "category": 2,
       "subCategory": 5,
-      "id": 6
-    },
-    {
-      "name": "asdasd",
-      "description": "asdasdas",
-      "price": 21312,
-      "image": "",
-      "stockCount": 123123,
-      "barcode": "123123",
-      "category": 5,
-      "subCategory": 13,
-      "id": 7
-    },
-    {
-      "name": "",
-      "description": "",
-      "price": 0,
-      "image": "",
-      "stockCount": 0,
-      "barcode": "",
-      "category": 0,
-      "subCategory": 0,
-      "id": 8
+      "id": 10
     }
   ],
   "categories": [
