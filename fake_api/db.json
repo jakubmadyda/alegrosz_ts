@@ -1,26 +1,92 @@
 {
   "products": [
     {
-      "name": "wqeerdr",
-      "description": "vssf",
-      "price": 314,
+      "name": "Macbook Air",
+      "description": "MacBook Air to lekki i wydajny laptop dla każdego, kto ceni sobie mobilność i wydajność. Wyposażony w ekran Retina, oferuje wyjątkowo jasny i ostry obraz. Dzięki wbudowanym głośnikom o wysokiej jakości, MacBook Air zapewnia doskonałe doświadczenie audio. Idealny dla profesjonalistów, którzy potrzebują niezawodnego narzędzia do pracy w dowolnym miejscu.",
+      "price": 315.30,
       "image": "",
-      "stockCount": 134124,
-      "barcode": "1231423",
-      "category": 1,
-      "subCategory": 2,
+      "stockCount": 350,
+      "barcode": "",
+      "category": 3,
+      "subcategory": 7,
+      "id": 4
+    },
+    {
+      "name": "Macbook Air Plus",
+      "description": "MacBook Air Plus to lekki i wydajny laptop, który dostarcza wydajność i jakość wykonania. Wyposażony w wyświetlacz Retina o niesamowitej rozdzielczości, MacBook Air Plus dostarcza obrazów o niesamowitej ostrości i głębi kolorów.",
+      "price": 295.00,
+      "image": "",
+      "stockCount": 150,
+      "barcode": "",
+      "category": 3,
+      "subcategory": 7,
+      "id": 5
+    },
+    {
+      "name": "Macbook Pro Plus",
+      "description": "MacBook Pro Plus to potężny laptop dla profesjonalistów, który oferuje niezrównaną wydajność i doskonałą jakość wykonania. MacBook Pro Plus to idealne narzędzie dla kreatywnych profesjonalistów, którzy potrzebują mobilności i niezawodności w jednym urządzeniu.",
+      "price": 399.99,
+      "image": "",
+      "stockCount": 120,
+      "barcode": "",
+      "category": 3,
+      "subcategory": 7,
+      "id": 6
+    },
+    {
+      "name": "Macbook Pro Max",
+      "description": "MacBook Pro Max to laptop o maksymalnej mocy dla profesjonalistów, oferujący najwyższą wydajność i doskonałą jakość wykonania. To idealne narzędzie dla kreatywnych profesjonalistów, którzy potrzebują mobilności i niezawodności w jednym urządzeniu.",
+      "price": 489.99,
+      "image": "",
+      "stockCount": 215,
+      "barcode": "",
+      "category": 3,
+      "subcategory": 7,
+      "id": 7
+    },
+    {
+      "name": "Macbook Pro Ultra",
+      "description": "MacBook Pro Ultra to nadzwyczaj potężny laptop dla najbardziej wymagających profesjonalistów, zapewniający niezrównaną wydajność i doskonałą jakość wykonania. Idealny dla kreatywnych profesjonalistów poszukujących najwyższej jakości i niezawodności.",
+      "price": 550.00,
+      "image": "",
+      "stockCount": 245,
+      "barcode": "",
+      "category": 3,
+      "subcategory": 7,
+      "id": 8
+    },
+    {
+      "name": "Macbook Pro Plus Ultra",
+      "description": "MacBook Pro Plus Ultra to komputer przenośny o niezrównanej mocy i jakości wykonania. Idealny dla profesjonalistów szukających niezawodności i mobilności w jednym urządzeniu. Zawiera rewolucyjny wyświetlacz Retina o niesamowitej rozdzielczości.",
+      "price": 629.99,
+      "image": "",
+      "stockCount": 215,
+      "barcode": "",
+      "category": 3,
+      "subcategory": 7,
       "id": 9
     },
     {
-      "name": "iphone x",
-      "description": "opis",
-      "price": 220,
+      "name": "Macbook Pro Extreme",
+      "description": "Macbook Pro Extreme to niezrównany laptop dla profesjonalistów poszukujących ekstremalnej wydajności i doskonałej jakości. Jego rewolucyjny wyświetlacz Retina oferuje niesamowitą ostrość obrazu i głębię kolorów.",
+      "price": 679.99,
       "image": "",
-      "stockCount": 120,
-      "barcode": "12345676",
-      "category": 2,
-      "subCategory": 5,
+      "stockCount": 235,
+      "barcode": "",
+      "category": 3,
+      "subcategory": 7,
       "id": 10
+    },
+    {
+      "name": "Macbook Pro Advanced",
+      "description": "Macbook Pro Advanced to laptop dla profesjonalistów, oferujący zaawansowane funkcje, niezrównaną wydajność i doskonałą jakość wykonania. Jego innowacyjna klawiatura i rewolucyjny wyświetlacz Retina sprawiają, że praca na tym laptopie to czysta przyjemność.",
+      "price": 725.00,
+      "image": "",
+      "stockCount": 255,
+      "barcode": "",
+      "category": 3,
+      "subcategory": 7,
+      "id": 11
     }
   ],
   "categories": [
