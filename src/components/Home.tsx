@@ -6,8 +6,9 @@ import {
     InputLabel,
     MenuItem,
     Select,
+    SelectChangeEvent,
 } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Product, ProductWithCategories } from '../types/product';
 import { ApiType } from '../types/api';
@@ -50,9 +51,14 @@ async function getProductsWithCategories(
 }
 
 function Home() {
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const [products, setProducts] = useState<ProductWithCategories[]>([]);
     const [query, setQuery] = useState('');
-    const [sortParam, setSortParam] = useState<string>('');
+    const [sortParam, setSortParam] = useState<string>(
+        searchParams.get('sortBy') || ''
+    );
+
     const location = useLocation();
     const [msg, setMsg] = useState<boolean | undefined>(
         location.state?.deleted
@@ -68,7 +74,18 @@ function Home() {
         };
     }, []);
 
-    function handleSortPrice(e) {
+    useEffect(() => {
+        // TODO: create query params for product search
+        const queryParams: { sortBy?: string } = {};
+
+        if (sortParam) {
+            queryParams.sortBy = sortParam;
+        }
+
+        setSearchParams(queryParams);
+    }, [sortParam]);
+
+    function handleSortPrice(e: SelectChangeEvent) {
         setSortParam(e.target.value);
     }
 
