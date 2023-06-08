@@ -139,7 +139,7 @@ function ProductForm() {
             )}
             <form onSubmit={formik.handleSubmit}>
                 <Grid spacing={2} container>
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                         <TextField
                             fullWidth
                             variant="outlined"
@@ -149,7 +149,7 @@ function ProductForm() {
                             onChange={formik.handleChange}
                         />
                     </Grid>
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                         <TextField
                             fullWidth
                             variant="outlined"
@@ -160,7 +160,7 @@ function ProductForm() {
                             multiline
                         />
                     </Grid>
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                         <TextField
                             fullWidth
                             variant="outlined"
@@ -171,10 +171,10 @@ function ProductForm() {
                             onChange={formik.handleChange}
                         />
                     </Grid>
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                         <DropInput />
                     </Grid>
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                         <TextField
                             fullWidth
                             variant="outlined"
@@ -185,7 +185,7 @@ function ProductForm() {
                             onChange={formik.handleChange}
                         />
                     </Grid>
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                         <TextField
                             fullWidth
                             variant="outlined"
@@ -195,7 +195,7 @@ function ProductForm() {
                             onChange={formik.handleChange}
                         />
                     </Grid>
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                         <FormControl fullWidth>
                             <InputLabel id="categoryLbl">Category</InputLabel>
                             <Select
@@ -222,7 +222,7 @@ function ProductForm() {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                         <FormControl fullWidth>
                             <InputLabel id="categoryLbl">
                                 Sub Category
@@ -248,7 +248,7 @@ function ProductForm() {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                         <Button variant="contained" type="submit">
                             Add Product
                         </Button>

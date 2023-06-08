@@ -1,5 +1,5 @@
 import { TextField } from '@mui/material';
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 type SearchProps = {
     value: string;
