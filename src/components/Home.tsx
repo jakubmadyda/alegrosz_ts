@@ -11,21 +11,10 @@ import {
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Product, ProductWithCategories } from '../types/product';
-import { ApiType } from '../types/api';
 import { CategoryApi, Subcategory } from '../types/category';
 import { Search } from './Inputs/Search';
 import ProductList from './Products/ProductList';
-
-async function getData<T>({ endpoint, signal }: ApiType): Promise<T[]> {
-    const init: { signal?: AbortSignal } = {};
-    if (signal !== undefined) {
-        init.signal = signal;
-    }
-
-    const response = await fetch(`/api/v1/${endpoint}`, init);
-
-    return response.json();
-}
+import { getData } from '../api/api';
 
 async function getProductsWithCategories(
     signal: AbortSignal

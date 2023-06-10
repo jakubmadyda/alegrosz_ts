@@ -2,7 +2,16 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Product } from '../../types/product';
 import { useEffect, useState } from 'react';
 import { Loader } from '../Feedback/Loader';
-import { Button } from '@mui/material';
+import {
+    Box,
+    Button,
+    Card,
+    CardMedia,
+    Grid,
+    Paper,
+    Typography,
+} from '@mui/material';
+import { faker } from '@faker-js/faker';
 
 async function getProduct(
     endpoint: string,
@@ -56,10 +65,80 @@ function ProductDetails() {
     }
     return (
         <>
-            <h1>Product: {product.name}</h1>
-            <Button variant="contained" onClick={handleDelete}>
-                Delete
-            </Button>
+            <Box sx={{ my: '20px' }}>
+                <Grid spacing={2} container>
+                    <Grid item xs={12}>
+                        <Typography variant="h1" gutterBottom>
+                            {product.name}
+                        </Typography>
+                        <Typography variant="subtitle1" gutterBottom>
+                            {product.category}/{product.subcategory}
+                        </Typography>
+                        <Grid spacing={2} container>
+                            <Grid item xs={6}>
+                                <Card
+                                    xs={{
+                                        maxWidth: 440,
+                                    }}
+                                >
+                                    <CardMedia
+                                        sx={{ height: 500 }}
+                                        image={faker.image.urlLoremFlickr({
+                                            category: 'technics',
+                                        })}
+                                        title={product.name}
+                                    />
+                                </Card>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Paper
+                                    elevation={1}
+                                    style={{
+                                        padding: 10,
+                                        marginBottom: 10,
+                                    }}
+                                >
+                                    <Typography variant="body1">
+                                        {product.description}
+                                    </Typography>
+                                </Paper>
+                                <Paper
+                                    elevation={2}
+                                    style={{
+                                        padding: 10,
+                                        display: 'flex',
+                                        gap: 20,
+                                        alignItems: 'center',
+                                        marginBottom: 10,
+                                    }}
+                                >
+                                    <Typography variant="h5">
+                                        price: ${product.price}
+                                    </Typography>
+                                    <Button variant="outlined">Buy now</Button>
+                                </Paper>
+                                <Paper
+                                    elevation={1}
+                                    style={{
+                                        padding: 10,
+                                        display: 'flex',
+                                        gap: 20,
+                                    }}
+                                >
+                                    <Button variant="outlined">Edit</Button>
+                                    <Button
+                                        variant="contained"
+                                        onClick={handleDelete}
+                                        color="error"
+                                    >
+                                        Delete
+                                    </Button>
+                                </Paper>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Box>
         </>
     );
 }
