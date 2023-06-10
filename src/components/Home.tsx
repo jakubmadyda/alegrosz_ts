@@ -54,7 +54,7 @@ function Home() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [products, setProducts] = useState<ProductWithCategories[]>([]);
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState(searchParams.get('query') || '');
     const [sortParam, setSortParam] = useState<string>(
         searchParams.get('sortBy') || ''
     );
@@ -76,14 +76,15 @@ function Home() {
 
     useEffect(() => {
         // TODO: create query params for product search
-        const queryParams: { sortBy?: string } = {};
+        const queryParams: { sortBy?: string; query?: string } = {};
 
-        if (sortParam) {
+        if (sortParam || query) {
             queryParams.sortBy = sortParam;
+            queryParams.query = query;
         }
 
         setSearchParams(queryParams);
-    }, [sortParam]);
+    }, [sortParam, query]);
 
     function handleSortPrice(e: SelectChangeEvent) {
         setSortParam(e.target.value);
