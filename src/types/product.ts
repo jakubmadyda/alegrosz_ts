@@ -1,4 +1,4 @@
-import { CategoryApi, Kind } from './category';
+import { Category, CategoryApi, Kind } from './category';
 
 export interface Product {
     name: string;
@@ -18,4 +18,9 @@ export interface ProductWithCategories
     extends Omit<Product, 'category' | 'subcategory'> {
     category: CategoryApi | undefined;
     subcategory: Kind | undefined;
+}
+
+export interface ProductWithCategoriesAndSubcategories
+    extends Omit<ProductWithCategories, 'category'> {
+    category: Category | undefined;
 }

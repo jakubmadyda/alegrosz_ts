@@ -1,6 +1,9 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Product } from '../../types/product';
-import { useEffect, useState } from 'react';
+import {
+    Product,
+    ProductWithCategoriesAndSubcategories,
+} from '../../types/product';
+import { useContext, useEffect, useState } from 'react';
 import { Loader } from '../Feedback/Loader';
 import {
     Box,
@@ -12,6 +15,8 @@ import {
     Typography,
 } from '@mui/material';
 import { faker } from '@faker-js/faker';
+import { CategoriesContext } from '../../context/CategoriesContext';
+import { Category } from '../../types/category';
 
 async function getProduct(
     endpoint: string,
@@ -29,26 +34,47 @@ async function deleteProduct(endpoint: string): Promise<Record<string, never>> {
     return response.json();
 }
 
+function addCategoryNamesToProduct(
+    product: Product,
+    categories: Category[] | null
+): ProductWithCategoriesAndSubcategories {
+    const category = categories
+        ? categories.find((category) => category.id === product.category)
+        : undefined;
+
+    if (category === undefined) {
+        throw new Error(`Cannot find category with id: ${product.category}`);
+    }
+
+    return {
+        ...product,
+        category,
+        subcategory: category.subcategories.find(
+            (subcategory) => product.subcategory === subcategory.id
+        ),
+    };
+}
+
 function ProductDetails() {
     const { id } = useParams();
-    const [product, setProduct] = useState<Product | null>(null);
-
+    const [product, setProduct] =
+        useState<ProductWithCategoriesAndSubcategories | null>(null);
+    const categories = useContext(CategoriesContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         const controller = new AbortController();
 
-        if (id !== undefined) {
-            getProduct(`products/${id}`, controller.signal).then(setProduct);
-        } else {
-            // TODO: create error boundary for this component
-            throw new Error(`Invalid query params id: ${id}`);
+        if (id !== undefined && categories) {
+            getProduct(`products/${id}`, controller.signal).then((product) => {
+                setProduct(addCategoryNamesToProduct(product, categories));
+            });
         }
 
         return () => {
             controller.abort();
         };
-    }, [id]);
+    }, [id, categories]);
 
     async function handleDelete() {
         await deleteProduct(`products/${id}`);
@@ -72,7 +98,7 @@ function ProductDetails() {
                             {product.name}
                         </Typography>
                         <Typography variant="subtitle1" gutterBottom>
-                            {product.category}/{product.subcategory}
+                            {product.category?.name}/{product.subcategory?.name}
                         </Typography>
                         <Grid spacing={2} container>
                             <Grid item xs={6}>

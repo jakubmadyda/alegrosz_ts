@@ -1,12 +1,15 @@
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 import { CssBaseline } from '@mui/material';
+import CategoriesProvider from './components/Providers/CategoriesProvider';
 
 function App() {
     return (
         <>
             <CssBaseline />
-            <RouterProvider router={router} />
+            <CategoriesProvider>
+                <RouterProvider router={router} />
+            </CategoriesProvider>
         </>
     );
 }

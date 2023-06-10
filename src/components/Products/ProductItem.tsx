@@ -43,7 +43,9 @@ function ProductItem({ product }: ProductItemProps) {
                 </CardContent>
                 <CardActions>
                     <Link to={`/products/${product.id}`}>
-                        <Button size="small">More info</Button>
+                        <Button variant="outlined" size="small">
+                            More info
+                        </Button>
                     </Link>
                 </CardActions>
             </CardActionArea>
