@@ -24,3 +24,10 @@ export interface ProductWithCategoriesAndSubcategories
     extends Omit<ProductWithCategories, 'category'> {
     category: Category | undefined;
 }
+
+export interface ProductCart {
+    id: number;
+    name: string;
+    quantity: number;
+    price: number;
+}

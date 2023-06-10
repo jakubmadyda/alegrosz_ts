@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 import { faker } from '@faker-js/faker';
+import CartTotal from '../Cart/CartTotal';
 
 const avatar = faker.image.avatar();
 
@@ -212,7 +213,11 @@ function Navbar() {
                             </Link>
                         ))}
                     </Box>
-
+                    <Box
+                        sx={{ flexGrow: 1, textAlign: 'end', paddingRight: 2 }}
+                    >
+                        <CartTotal />
+                    </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton
