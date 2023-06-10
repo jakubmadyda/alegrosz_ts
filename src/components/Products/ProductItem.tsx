@@ -1,13 +1,16 @@
 import { faker } from '@faker-js/faker';
 import {
+    Button,
     Card,
     CardActionArea,
+    CardActions,
     CardContent,
     CardMedia,
     Chip,
     Typography,
 } from '@mui/material';
 import { ProductWithCategories } from '../../types/product';
+import { Link } from 'react-router-dom';
 
 type ProductItemProps = {
     product: ProductWithCategories;
@@ -38,6 +41,11 @@ function ProductItem({ product }: ProductItemProps) {
                         variant="outlined"
                     />
                 </CardContent>
+                <CardActions>
+                    <Link to={`/products/${product.id}`}>
+                        <Button size="small">More info</Button>
+                    </Link>
+                </CardActions>
             </CardActionArea>
         </Card>
     );

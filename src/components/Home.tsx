@@ -54,7 +54,7 @@ function Home() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [products, setProducts] = useState<ProductWithCategories[]>([]);
-    const [query, setQuery] = useState(searchParams.get('query') || '');
+    const [query, setQuery] = useState<string>(searchParams.get('query') || '');
     const [sortParam, setSortParam] = useState<string>(
         searchParams.get('sortBy') || ''
     );
