@@ -9,14 +9,39 @@ import {
     Chip,
     Typography,
 } from '@mui/material';
-import { ProductWithCategories } from '../../types/product';
+import { ProductCart, ProductWithCategories } from '../../types/product';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { CartContext } from '../../context/CartContext';
 
 type ProductItemProps = {
     product: ProductWithCategories;
 };
 
 function ProductItem({ product }: ProductItemProps) {
+    const [cartProducts, setCartProducts] = useContext(CartContext);
+
+    function addToCartQuick() {
+        let cartProduct: ProductCart | undefined = cartProducts.find(
+            (cartProduct) => cartProduct.id === product.id
+        );
+
+        if (cartProduct === undefined) {
+            cartProduct = {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: 1,
+            } as ProductCart;
+
+            setCartProducts([...cartProducts, cartProduct]);
+        } else {
+            cartProduct.quantity += 1;
+
+            setCartProducts([...cartProducts]);
+        }
+    }
+
     return (
         <Card>
             <CardActionArea>
@@ -47,6 +72,14 @@ function ProductItem({ product }: ProductItemProps) {
                             More info
                         </Button>
                     </Link>
+                    <Button
+                        variant="outlined"
+                        size="small"
+                        color="success"
+                        onClick={addToCartQuick}
+                    >
+                        Quick buy
+                    </Button>
                 </CardActions>
             </CardActionArea>
         </Card>
