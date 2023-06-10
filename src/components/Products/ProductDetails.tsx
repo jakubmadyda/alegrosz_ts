@@ -1,9 +1,10 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     Product,
+    ProductCart,
     ProductWithCategoriesAndSubcategories,
 } from '../../types/product';
-import { useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { Loader } from '../Feedback/Loader';
 import {
     Box,
@@ -12,11 +13,13 @@ import {
     CardMedia,
     Grid,
     Paper,
+    TextField,
     Typography,
 } from '@mui/material';
 import { faker } from '@faker-js/faker';
 import { CategoriesContext } from '../../context/CategoriesContext';
 import { Category } from '../../types/category';
+import { CartContext } from '../../context/CartContext';
 
 async function getProduct(
     endpoint: string,
@@ -61,6 +64,8 @@ function ProductDetails() {
         useState<ProductWithCategoriesAndSubcategories | null>(null);
     const categories = useContext(CategoriesContext);
     const navigate = useNavigate();
+    const [quantity, setQuantity] = useState(1);
+    const [cartProducts, setCartProducts] = useContext(CartContext);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -84,6 +89,31 @@ function ProductDetails() {
                 deleted: true,
             },
         });
+    }
+
+    function addToCart() {
+        if (!product) {
+            throw new Error(`No product`);
+        }
+
+        let cartProduct: ProductCart | undefined = cartProducts.find(
+            (cartProduct) => cartProduct.id === product.id
+        );
+
+        if (cartProduct === undefined) {
+            cartProduct = {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: quantity,
+            } as ProductCart;
+
+            setCartProducts([...cartProducts, cartProduct]);
+        } else {
+            cartProduct.quantity += quantity;
+
+            setCartProducts([...cartProducts]);
+        }
     }
 
     if (!product) {
@@ -141,7 +171,21 @@ function ProductDetails() {
                                     <Typography variant="h5">
                                         price: ${product.price}
                                     </Typography>
-                                    <Button variant="outlined">Buy now</Button>
+                                    <TextField
+                                        type="number"
+                                        label="Quantity"
+                                        id="quantity"
+                                        value={quantity}
+                                        onChange={(
+                                            e: ChangeEvent<HTMLInputElement>
+                                        ) => setQuantity(+e.target.value)}
+                                    />
+                                    <Button
+                                        onClick={addToCart}
+                                        variant="outlined"
+                                    >
+                                        Buy now
+                                    </Button>
                                 </Paper>
                                 <Paper
                                     elevation={1}

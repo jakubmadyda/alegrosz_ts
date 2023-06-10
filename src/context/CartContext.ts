@@ -12,5 +12,6 @@ export const CartContext = createContext<
             quantity: 3,
         },
     ],
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     () => {},
 ]);
