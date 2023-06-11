@@ -1,10 +1,10 @@
-import { Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 import { ProductCart } from '../../types/product';
 
 function CartTotal() {
-    const [cartProducts] = useContext(CartContext);
+    const [cartProducts, setCartProducts] = useContext(CartContext);
 
     function calculateTotal(products: ProductCart[]): number {
         return +products
@@ -12,13 +12,37 @@ function CartTotal() {
             .toFixed(2);
     }
 
+    function clearCart() {
+        setCartProducts([]);
+    }
+
     return (
         <>
-            <Typography variant="subtitle2">
-                {cartProducts && cartProducts.length > 0
-                    ? `$${calculateTotal(cartProducts)}`
-                    : `Your cart is empty.`}
-            </Typography>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                    gap: '10px',
+                }}
+            >
+                <Typography variant="subtitle2">
+                    {cartProducts && cartProducts.length > 0
+                        ? `$${calculateTotal(cartProducts)}`
+                        : `Your cart is empty.`}
+                </Typography>
+                {cartProducts && cartProducts.length > 0 && (
+                    <Button
+                        onClick={clearCart}
+                        variant="contained"
+                        color="error"
+                        size="small"
+                    >
+                        clear
+                    </Button>
+                )}
+            </Box>
         </>
     );
 }
