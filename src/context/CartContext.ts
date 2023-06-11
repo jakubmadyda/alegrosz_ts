@@ -1,8 +1,9 @@
 import { createContext } from 'react';
 import { ProductCart } from '../types/product';
+import { LocalStorageValue } from '../types/localStorage';
 
 export const CartContext = createContext<
-    [ProductCart[], (products: ProductCart[]) => void]
+    [LocalStorageValue<ProductCart[]>, (value: ProductCart[]) => void]
 >([
     [
         {

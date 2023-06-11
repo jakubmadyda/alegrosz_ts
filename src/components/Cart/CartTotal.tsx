@@ -15,7 +15,7 @@ function CartTotal() {
     return (
         <>
             <Typography variant="subtitle2">
-                {cartProducts.length > 0
+                {cartProducts && cartProducts.length > 0
                     ? `$${calculateTotal(cartProducts)}`
                     : `Your cart is empty.`}
             </Typography>
