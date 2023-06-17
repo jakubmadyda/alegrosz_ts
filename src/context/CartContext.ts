@@ -1,9 +1,12 @@
-import { createContext } from 'react';
+import { createContext, Dispatch, SetStateAction } from 'react';
 import { ProductCart } from '../types/product';
 import { LocalStorageValue } from '../types/localStorage';
 
 export const CartContext = createContext<
-    [LocalStorageValue<ProductCart[]>, (value: ProductCart[]) => void]
+    [
+        LocalStorageValue<ProductCart[]>,
+        Dispatch<SetStateAction<LocalStorageValue<ProductCart[]>>>
+    ]
 >([
     [
         {

@@ -9,7 +9,7 @@ import {
     SelectChangeEvent,
 } from '@mui/material';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Product, ProductWithCategories } from '../types/product';
 import { CategoryApi, Subcategory } from '../types/category';
 import { Search } from './Inputs/Search';
@@ -131,4 +131,6 @@ function Home() {
     );
 }
 
-export default Home;
+const HomeMemoized = memo(Home);
+
+export default HomeMemoized;

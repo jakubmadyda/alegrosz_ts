@@ -11,35 +11,54 @@ import {
 } from '@mui/material';
 import { ProductCart, ProductWithCategories } from '../../types/product';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import { memo, useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 
 type ProductItemProps = {
     product: ProductWithCategories;
+    handleAddToWatchList: () => void;
+    handleAddToCart: (product: ProductCart) => void;
 };
 
-function ProductItem({ product }: ProductItemProps) {
+function ProductItem({
+    product,
+    handleAddToWatchList,
+    handleAddToCart,
+}: ProductItemProps) {
     const [cartProducts, setCartProducts] = useContext(CartContext);
 
     function addToCartQuick() {
-        let cartProduct: ProductCart | undefined = cartProducts.find(
-            (cartProduct) => cartProduct.id === product.id
-        );
+        handleAddToCart({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: 1,
+        });
+    }
 
-        if (cartProduct === undefined) {
-            cartProduct = {
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                quantity: 1,
-            } as ProductCart;
+    function isInCart(): boolean {
+        return false;
+        // return cartProducts !== undefined
+        //     ? cartProducts.some(({ id }) => id === product.id)
+        //     : false;
+    }
 
-            setCartProducts([...cartProducts, cartProduct]);
-        } else {
-            cartProduct.quantity += 1;
+    console.log('magic');
 
-            setCartProducts([...cartProducts]);
-        }
+    function deleteFromCart() {
+        // const updatedCart: ProductCart[] = [];
+        //
+        // for (const cartProduct of cartProducts || []) {
+        //     if (cartProduct.id !== product.id) {
+        //         updatedCart.push(cartProduct);
+        //     } else {
+        //         if (cartProduct.quantity > 1) {
+        //             cartProduct.quantity -= 1;
+        //             updatedCart.push(cartProduct);
+        //         }
+        //     }
+        // }
+        // setCartProducts(updatedCart);
     }
 
     return (
@@ -80,10 +99,30 @@ function ProductItem({ product }: ProductItemProps) {
                     >
                         Quick buy
                     </Button>
+                    <Button
+                        variant="outlined"
+                        size="small"
+                        color="success"
+                        onClick={handleAddToWatchList}
+                    >
+                        Add to watchlist
+                    </Button>
+                    {isInCart() && (
+                        <Button
+                            onClick={deleteFromCart}
+                            variant="outlined"
+                            size="small"
+                            color="warning"
+                        >
+                            Undo
+                        </Button>
+                    )}
                 </CardActions>
             </CardActionArea>
         </Card>
     );
 }
 
-export default ProductItem;
+const ProductItemMemoized = memo(ProductItem);
+
+export default ProductItemMemoized;
