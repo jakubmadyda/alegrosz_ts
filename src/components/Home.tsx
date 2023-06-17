@@ -10,39 +10,12 @@ import {
 } from '@mui/material';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { memo, useEffect, useState } from 'react';
-import { Product, ProductWithCategories } from '../types/product';
-import { CategoryApi, Subcategory } from '../types/category';
 import { Search } from './Inputs/Search';
 import ProductList from './Products/ProductList';
-import { getData } from '../api/api';
-
-async function getProductsWithCategories(
-    signal: AbortSignal
-): Promise<ProductWithCategories[]> {
-    const response: [Product[], CategoryApi[], Subcategory[]] =
-        await Promise.all([
-            getData<Product>({ endpoint: 'products', signal }),
-            getData<CategoryApi>({ endpoint: 'categories', signal }),
-            getData<Subcategory>({ endpoint: 'subcategories', signal }),
-        ]);
-
-    const [products, categories, subcategories] = response;
-
-    return products.map((product) => ({
-        ...product,
-        category: categories.find(
-            (category) => product.category === category.id
-        ),
-        subcategory: subcategories.find(
-            (subcategory) => product.subcategory === subcategory.id
-        ),
-    }));
-}
 
 function Home() {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [products, setProducts] = useState<ProductWithCategories[]>([]);
     const [query, setQuery] = useState<string>(searchParams.get('query') || '');
     const [sortParam, setSortParam] = useState<string>(
         searchParams.get('sortBy') || ''
@@ -52,16 +25,6 @@ function Home() {
     const [msg, setMsg] = useState<boolean | undefined>(
         location.state?.deleted
     );
-
-    useEffect(() => {
-        const controller = new AbortController();
-
-        getProductsWithCategories(controller.signal).then(setProducts);
-
-        return () => {
-            controller.abort();
-        };
-    }, []);
 
     useEffect(() => {
         // TODO: create query params for product search
@@ -120,11 +83,7 @@ function Home() {
                     </FormControl>
                 </Grid>
                 <Grid container spacing={2}>
-                    <ProductList
-                        products={products}
-                        query={query}
-                        sortParam={sortParam}
-                    />
+                    <ProductList query={query} sortParam={sortParam} />
                 </Grid>
             </Grid>
         </Box>

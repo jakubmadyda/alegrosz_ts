@@ -9,13 +9,13 @@ import {
     Chip,
     Typography,
 } from '@mui/material';
-import { ProductCart, ProductWithCategories } from '../../types/product';
+import { ProductCart, ProductWithCart } from '../../types/product';
 import { Link } from 'react-router-dom';
 import { memo, useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 
 type ProductItemProps = {
-    product: ProductWithCategories;
+    product: ProductWithCart;
     handleAddToWatchList: () => void;
     handleAddToCart: (product: ProductCart) => void;
 };
@@ -107,7 +107,7 @@ function ProductItem({
                     >
                         Add to watchlist
                     </Button>
-                    {isInCart() && (
+                    {product.isInCart && (
                         <Button
                             onClick={deleteFromCart}
                             variant="outlined"
