@@ -1,18 +1,26 @@
 import { ProductCart, ProductWithCart } from '../../types/product';
 import ProductItem from './ProductItem';
-import { Grid, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import { memo, useCallback, useContext, useEffect, useState } from 'react';
 import { CartContext } from '../../context/CartContext';
 import { LocalStorageValue } from '../../types/localStorage';
 import { getProductsWithCategories } from '../../api/api';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 type ProductListProps = {
     query: string;
     sortParam: string;
+    category: string;
+    setCategory: (value: string) => void;
 };
 
-function ProductList({ query, sortParam }: ProductListProps) {
-    const [watchList, setWatchList] = useState(0);
+function ProductList({
+    query,
+    sortParam,
+    category,
+    setCategory,
+}: ProductListProps) {
+    const [watchList, setWatchList] = useLocalStorage('watchList', 0);
     const [cartProducts, setCartProducts] = useContext(CartContext);
     const [products, setProducts] = useState<ProductWithCart[]>([]);
 
@@ -45,9 +53,14 @@ function ProductList({ query, sortParam }: ProductListProps) {
         );
     }, [cartProducts]);
 
-    const handleAddToWatchList = useCallback(function () {
-        setWatchList((prevState) => prevState + 1);
-    }, []);
+    const handleAddToWatchList = useCallback(
+        function () {
+            setWatchList((prevState) =>
+                prevState !== undefined ? prevState + 1 : 1
+            );
+        },
+        [setWatchList]
+    );
 
     const handleAddToCart = useCallback(
         function (product: ProductCart) {
@@ -75,38 +88,55 @@ function ProductList({ query, sortParam }: ProductListProps) {
         [setCartProducts]
     );
 
-    const handleCancelProduct = useCallback(function (product) {
-        setCartProducts(
-            (
-                prevState: LocalStorageValue<ProductCart[]> | undefined
-            ): LocalStorageValue<ProductCart[]> => {
-                const updatedCart: ProductCart[] = [];
+    const handleCancelProduct = useCallback(
+        function (product) {
+            setCartProducts(
+                (
+                    prevState: LocalStorageValue<ProductCart[]> | undefined
+                ): LocalStorageValue<ProductCart[]> => {
+                    const updatedCart: ProductCart[] = [];
 
-                for (const cartProduct of prevState || []) {
-                    if (cartProduct.id !== product.id) {
-                        updatedCart.push(cartProduct);
-                    } else {
-                        if (cartProduct.quantity > 1) {
-                            cartProduct.quantity -= 1;
+                    for (const cartProduct of prevState || []) {
+                        if (cartProduct.id !== product.id) {
                             updatedCart.push(cartProduct);
+                        } else {
+                            if (cartProduct.quantity > 1) {
+                                cartProduct.quantity -= 1;
+                                updatedCart.push(cartProduct);
+                            }
                         }
                     }
+                    return updatedCart;
                 }
-                return updatedCart;
-            }
-        );
-    }, []);
+            );
+        },
+        [setCartProducts]
+    );
+
+    const handleSelectCategory = useCallback(
+        function (category: string) {
+            setCategory(category);
+        },
+        [setCategory]
+    );
 
     return (
         <>
-            <Grid item xs={12}>
-                <Typography>Watched Products: {watchList}</Typography>
-            </Grid>
+            {watchList !== 0 && (
+                <Grid item xs={12}>
+                    <Typography>Watched Products: {watchList}</Typography>
+                    <Button variant="contained" onClick={() => setWatchList(0)}>
+                        Clear watchlist
+                    </Button>
+                </Grid>
+            )}
             {products
-                .filter((product) =>
-                    `${product.name} ${product.description}`
-                        .toLowerCase()
-                        .includes(query.toLowerCase())
+                .filter(
+                    (product) =>
+                        `${product.name} ${product.description}`
+                            .toLowerCase()
+                            .includes(query.toLowerCase()) &&
+                        (product.category?.name === category || category === '')
                 )
                 .sort((a, b) => {
                     if (sortParam === 'asc') {
@@ -124,6 +154,8 @@ function ProductList({ query, sortParam }: ProductListProps) {
                             handleAddToWatchList={handleAddToWatchList}
                             handleAddToCart={handleAddToCart}
                             handleCancelProduct={handleCancelProduct}
+                            handleSelectCategory={handleSelectCategory}
+                            category={category}
                         />
                     </Grid>
                 ))}
