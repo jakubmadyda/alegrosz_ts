@@ -11,22 +11,21 @@ import {
 } from '@mui/material';
 import { ProductCart, ProductWithCart } from '../../types/product';
 import { Link } from 'react-router-dom';
-import { memo, useContext } from 'react';
-import { CartContext } from '../../context/CartContext';
+import { memo } from 'react';
 
 type ProductItemProps = {
     product: ProductWithCart;
     handleAddToWatchList: () => void;
     handleAddToCart: (product: ProductCart) => void;
+    handleCancelProduct: (product: ProductWithCart) => void;
 };
 
 function ProductItem({
     product,
     handleAddToWatchList,
     handleAddToCart,
+    handleCancelProduct,
 }: ProductItemProps) {
-    const [cartProducts, setCartProducts] = useContext(CartContext);
-
     function addToCartQuick() {
         handleAddToCart({
             id: product.id,
@@ -34,31 +33,6 @@ function ProductItem({
             price: product.price,
             quantity: 1,
         });
-    }
-
-    function isInCart(): boolean {
-        return false;
-        // return cartProducts !== undefined
-        //     ? cartProducts.some(({ id }) => id === product.id)
-        //     : false;
-    }
-
-    console.log('magic');
-
-    function deleteFromCart() {
-        // const updatedCart: ProductCart[] = [];
-        //
-        // for (const cartProduct of cartProducts || []) {
-        //     if (cartProduct.id !== product.id) {
-        //         updatedCart.push(cartProduct);
-        //     } else {
-        //         if (cartProduct.quantity > 1) {
-        //             cartProduct.quantity -= 1;
-        //             updatedCart.push(cartProduct);
-        //         }
-        //     }
-        // }
-        // setCartProducts(updatedCart);
     }
 
     return (
@@ -85,19 +59,28 @@ function ProductItem({
                         variant="outlined"
                     />
                 </CardContent>
-                <CardActions>
-                    <Link to={`/products/${product.id}`}>
-                        <Button variant="outlined" size="small">
-                            More info
-                        </Button>
-                    </Link>
+                <CardActions
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'space-around',
+                        alignItems: 'stretch',
+                    }}
+                >
+                    <Button variant="outlined" size="small">
+                        <Link
+                            to={`/products/${product.id}`}
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+                        >
+                            Details
+                        </Link>
+                    </Button>
                     <Button
                         variant="outlined"
                         size="small"
                         color="success"
                         onClick={addToCartQuick}
                     >
-                        Quick buy
+                        Buy
                     </Button>
                     <Button
                         variant="outlined"
@@ -105,11 +88,13 @@ function ProductItem({
                         color="success"
                         onClick={handleAddToWatchList}
                     >
-                        Add to watchlist
+                        +watch
                     </Button>
                     {product.isInCart && (
                         <Button
-                            onClick={deleteFromCart}
+                            onClick={() => {
+                                handleCancelProduct(product);
+                            }}
                             variant="outlined"
                             size="small"
                             color="warning"
